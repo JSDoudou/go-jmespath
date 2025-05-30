@@ -280,7 +280,7 @@ func newFunctionCaller() *functionCaller {
 			Name: "join",
 			Arguments: []ArgSpec{
 				{Types: []JpType{JpString}},
-				{variadic: true}, // Accepts any array, we'll coerce in jpfJoin
+				{Types: []JpType{JpArray}}, // Accepts any array, we'll coerce in jpfJoin
 			},
 			Handler: jpfJoin,
 		},
@@ -786,14 +786,19 @@ func jpfJoin(arguments []interface{}) (interface{}, error) {
 		return nil, fmt.Errorf("first argument to join must be a string")
 	}
 
+	// Accept any array and coerce items to string
 	array, ok := arguments[1].([]interface{})
 	if !ok {
 		return nil, fmt.Errorf("second argument to join must be an array")
 	}
 
-	arrayStr := []string{}
+	var arrayStr []string
 	for _, item := range array {
-		arrayStr = append(arrayStr, fmt.Sprintf("%v", item)) // coerce to string
+		if item == nil {
+			arrayStr = append(arrayStr, "") // Optional: or skip or error
+		} else {
+			arrayStr = append(arrayStr, fmt.Sprintf("%v", item))
+		}
 	}
 
 	return strings.Join(arrayStr, sep), nil
