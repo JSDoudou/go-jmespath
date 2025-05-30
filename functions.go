@@ -801,6 +801,7 @@ func jpfJoin(arguments []interface{}) (interface{}, error) {
 		}
 	}
 
+	fmt.Println("!!!!!!!!!jpfJoin called!!!!!!!!!")
 	return strings.Join(arrayStr, sep), nil
 }
 func jpfReverse(arguments []interface{}) (interface{}, error) {
