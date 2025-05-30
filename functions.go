@@ -280,7 +280,7 @@ func newFunctionCaller() *functionCaller {
 			Name: "join",
 			Arguments: []ArgSpec{
 				{Types: []JpType{JpString}},
-				{Types: []JpType{JpArrayString}},
+				{Types: []JpType{JpArray}}, // Accept any array, not just string array
 			},
 			Handler: jpfJoin,
 		},
@@ -781,13 +781,21 @@ func jpfSortBy(arguments []interface{}) (interface{}, error) {
 	}
 }
 func jpfJoin(arguments []interface{}) (interface{}, error) {
-	sep := arguments[0].(string)
-	// We can't just do arguments[1].([]string), we have to
-	// manually convert each item to a string.
-	arrayStr := []string{}
-	for _, item := range arguments[1].([]interface{}) {
-		arrayStr = append(arrayStr, item.(string))
+	sep, ok := arguments[0].(string)
+	if !ok {
+		return nil, fmt.Errorf("first argument to join must be a string")
 	}
+
+	array, ok := arguments[1].([]interface{})
+	if !ok {
+		return nil, fmt.Errorf("second argument to join must be an array")
+	}
+
+	arrayStr := []string{}
+	for _, item := range array {
+		arrayStr = append(arrayStr, fmt.Sprintf("%v", item)) // coerce to string
+	}
+
 	return strings.Join(arrayStr, sep), nil
 }
 func jpfReverse(arguments []interface{}) (interface{}, error) {
