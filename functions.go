@@ -781,17 +781,18 @@ func jpfSortBy(arguments []interface{}) (interface{}, error) {
 	}
 }
 func jpfJoin(arguments []interface{}) (interface{}, error) {
+	fmt.Println("!!!!!!!!!Into jpfJoin !!!!!!!!!")
 	sep, ok := arguments[0].(string)
 	if !ok {
 		return nil, fmt.Errorf("first argument to join must be a string")
 	}
-
+	fmt.Println("!!!!!!!!! jpfJoin first argument check passed!!!!!!!!!")
 	// Accept any array and coerce items to string
 	array, ok := arguments[1].([]interface{})
 	if !ok {
 		return nil, fmt.Errorf("second argument to join must be an array")
 	}
-
+	fmt.Println("!!!!!!!!! jpfJoin second argument check passed!!!!!!!!!")
 	var arrayStr []string
 	for _, item := range array {
 		if item == nil {
@@ -801,7 +802,7 @@ func jpfJoin(arguments []interface{}) (interface{}, error) {
 		}
 	}
 
-	fmt.Println("!!!!!!!!!jpfJoin called!!!!!!!!!")
+	fmt.Println("!!!!!!!!!jpfJoin join completed!!!!!!!!!")
 	return strings.Join(arrayStr, sep), nil
 }
 func jpfReverse(arguments []interface{}) (interface{}, error) {
