@@ -280,7 +280,7 @@ func newFunctionCaller() *functionCaller {
 			Name: "join",
 			Arguments: []ArgSpec{
 				{Types: []JpType{JpString}},
-				{Types: []JpType{JpArray}}, // Accept any array, not just string array
+				{variadic: true}, // Accepts any array, we'll coerce in jpfJoin
 			},
 			Handler: jpfJoin,
 		},
