@@ -784,7 +784,7 @@ func jpfSortBy(arguments []interface{}) (interface{}, error) {
 	}
 }
 func jpfJoin(arguments []interface{}) (interface{}, error) {
-	panic("🔥 REACHED CUSTOM jpfJoin 🔥")
+	panic("🔥 jpfJoin called!")
 	/*
 		fmt.Println("!!!!!!!!!Into jpfJoin !!!!!!!!!")
 		sep, ok := arguments[0].(string)
