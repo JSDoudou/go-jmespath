@@ -48,7 +48,7 @@ type byExprString struct {
 }
 
 func init() {
-	fmt.Println("✅ LOADED seek-ret forked go-jmespath v0.4.4")
+	fmt.Println("✅ LOADED jsdoudou forked go-jmespath v0.4.6")
 }
 func (a *byExprString) Len() int {
 	return len(a.items)
